@@ -1,0 +1,9 @@
+"device":"(?<nameDEV>[^"]+) ---\ escape character
+
+^ -- starting of the line 
+$ -- ending of the line
+/s -- one whitespace , /s+ -- one or more whitespace
+[a-z] -- equal to word between lower case a-z , [a-z]+ one or more word in lower case
+[A-Z] -- equal to word between upper case a-z , [A-Z]+ one or more word in upper case
+[0-9] -- any digit
+\w -- any letter or word, \w+ -- one or more word 
