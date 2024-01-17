@@ -1,0 +1,8 @@
+lookup --- automatic , time-based 
+
+Alerts - alerts are triggered when a specific condition is met
+creating alert - Run a search --> save as alert --> 
+alert type - schedule and realtime 
+schedule - run at regular interval --> condition triggered when the search completed 
+realtime - runs continuously in realtime --> 
+setting alert type - 

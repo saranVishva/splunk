@@ -1,0 +1,9 @@
+curl -k http://127.0.0.1:8088/services/collector/event -H "Authorization: Splunk 908a9394-ac83-4e9f-b237-f0d4642c8646" -H "Content-Type: application/json" -d '{"event": "hello world"}'
+{"text": "Success", "code": 0}
+curl -k http://13.234.240.46:8088/services/collector/event -H "Authorization: Splunk 25df235f-4276-4004-afc2-e45a4d38a260" -H "Content-Type: application/json" -d "sourcetype,test,trial"
+
+
+curl -k https://your-splunk-server:8088/services/collector/event \
+     -H "Authorization: Splunk 908a9394-ac83-4e9f-b237-f0d4642c8646 " \
+     -H "Content-Type: application/json" \
+     -d '{"event": "your data here"}'

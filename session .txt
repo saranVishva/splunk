@@ -1,0 +1,7 @@
+forwording --indexing-- searching
+src--buckets(hot,warm,cold,frozen,thawed)---(tsidx)files cerated
+
+bucket - journel(bloomfilter, tsidx)
+Tsidx - lexicon(concept)
+
+epoch time

@@ -1,0 +1,65 @@
+bucket --> JOURNAl.GZ and .tsidx (time series Index Files)
+JOURNAL -- _raw_event data  it contain slices of 128kb each files 
+tsidx --  are index keys to our journal files it tells splunk which slice of to openup inorder find the result looking for the search 
+  tsidx files are made - splunk take raw and chooses common unique term in data an tokenize them to lexicon in .tsidx
+   Each lexicon has unique posting list array it will give the location of the data from the journal array.
+
+tsidx contains -- lexicon and posting 
+
+Bloomfilter: it will be created when the data move from hot to warm
+     the unqiue terms go through certain hashing functions and set the 0 and 1 in bloomfilters simillarlly search key words go through same hashing and set 0 and 1 and it will compare for the match bloomfilter in all bucket . Comparing bloomfilter is much efficient way than searching on tsidx
+
+Transforming command: stats, timechart, chart, top, rare.  it is executed in search Head
+Streaming commands: centralized - transaction, streamstats and Distributable - eval, rename, feild, regex. it is executed in the Indexer.
+
+Segmatation:major and minor breakerse
+lisby expression: splunk uses lisby expression to build bloomfilters and to locate term in tsidx files.
+
+Troubleshoot command:
+
+ - | makeresults used to generate temporary event in memory.
+    it is used when one or more eval commands used
+    must be the first command in search
+    if we need to add any static data at search time it is not in your index
+
+ - | fieldsummary calculates a variety of summary statistics.
+
+----------------------------------------------------------------
+creating feild extraction: (manual)
+   feilds are searchable key value pair
+   they may be extracted in index time or search time or may be persistant or created in temporary memeory 
+   
+The feild extrator:
+   two methods for feild extractor - Regular exp and delimiters
+   regular exp - for unstructured data.  
+   delimiter - is used when the data are seperated same character like , | \ ....
+
+------------------------------------------
+   | chart, timechart, top, rare, stats
+
+chart - | chart count over id by host limit=10 useother=f ..... 
+timechart - it will count all data based on time  
+top -- show the highest value
+rare -- written the least count 
+stats -- it is similar to table
+-----------------------------------------
+functions- sum
+
+| stats min(price) as cost ,
+max(id) as ID, avg(price) as price , sum(price) as price  by component
+
+| stats values(user) as "user" -- it is display unique users 
+|stats list(user) as "user" -- it display with duplicate values
+-----------------------------------------
+|eval   -- it is for operations (arithmetic, concatenation, boolean, comparison)
+
+---------------------------------------------------
+
+Data model 
+
+3 types of dataset - events, searches, transaction
+
+event command doesn't contain transforming com 
+search com contain pipe 
+tansaction com contain transaction com
+

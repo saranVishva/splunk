@@ -1,0 +1,81 @@
+installation splunk in linux
+-extract tarz to opt
+-./splunk start 
+./splunk start --accept-license 
+
+
+
+-------------------------------------------------------
+install uf in instance
+wget -O link
+create splunkfwd group and user
+extract the tar to opt dir 
+change the ownership of the splunkhome directory 
+start the splunk from the bin folder
+
+chmod
+./splunk 
+./splunk enable boot-start systemd-managed 1 --accept-license 
+-------------------------------------------------------
+
+./splunk enable listen 9997             in splunk ENT
+./splunk add forward-server ip:port     in UF  
+
+./splunk add monitor /var/log           in UF 
+./splunk list forward-server            in UF
+
+./splunk display listen                  in splunk ENT 
+
+
+-----------------------------------------------------------------
+Create index
+./splunk add index indexname
+
+-------------------------------------------------------------------
+PORT
+TCP/8089: This port is used for API access to servers
+TCP/8000: This port is used for Splunk Web (HTTP by default)
+TCP/9997: This port is used for Splunk-to-Splunk forwarding data
+TCP/8081: This port is used for Search Head Clustering
+TCP/9887: This port is used for Search Head Clustering
+TCP/8080: This port is used for Index Replication
+TCP/514: This port is used for Legacy Syslog Input (UDP/TCP)
+TCP/8065: This port is used for Splunk App Server
+-----------------------------------------------------------------------------------
+spl
+stats ---
+eval -----
+rename name as name1
+sort -name
+feild
+usenull=f  --to remove the null value from chart
+top
+rare
+chart
+timechart
+stats
+geostats
+timewrap
+streaming and non-streaming
+
+useother=false  
+
+-------------------------------------------------------------------------------------
+
+---------------------------------------
+ NOTE: if you use instance change root password before installation
+
+sudo su
+adduser splunker
+passwd splunker
+wget -O splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz "https://download.splunk.com/products/splunk/releases/9.1.2/linux/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz"
+chown -R splunker:splunker splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz 
+su splunker
+tar xvf splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz -C /opt/
+chmod -R splunker:splunker /opt/splunk/
+./splunk enable boot-start systemd-managed 1 --accept-license 
+
+
+
+------------------------------------------------------------------
+index=web | stats count by src_ip | where src_ip like "10_.%"

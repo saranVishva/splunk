@@ -1,0 +1,5 @@
+netstat -tlnp -- for listening port(open)
+| nc ip port
+splunk help command
+
+splunk input status

@@ -1,0 +1,4 @@
+open files =64000
+thp 
+defrag = never
+vm.overcommit_memory=1

@@ -1,0 +1,64 @@
+# SPL cheatsheet:
+# Additional resource: http://www.bbosearch.com/searches
+########################################################
+
+- List users and corresponding roles:
+=====================================
+  | rest /services/authentication/users splunk_server=?
+  | fields title roles realname
+
+- List indexes:
+===============
+  | eventcount summarize=false index=* index=_* | dedup index | fields index
+  | rest /services/data/indexes | dedup title | table title
+
+- Simple tabling of results:
+============================
+...
+  | table _time src_ip src_port dest_ip dest_port proto url method proxy
+  | sort _time
+
+- Simple count statistics:
+==========================
+index=os sourcetype="wineventlog:security" EventCode=4688
+  | stats count, values(Creator_Process_Name) as Creator_Process_Name by New_Process_Name
+  | table New_Process_Name, count, Creator_Process_Name
+  | sort count
+
+- Send e-mail function:
+=======================
+  | sendemail to="john@doe.com"
+
+- Create timechart:
+===================
+...
+  | table _time, <field>, name
+  | timechart span=1d sum(<field>) by name
+
+- Show rare events:
+===================
+index=os sourcetype=registry
+  | rare process_image
+
+- Keep only the results that match a valid email address:
+=========================================================
+...
+  | regex email="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/"
+
+- Use sed syntax to match the regex to a series of numbers and replace them with an anonymized string:
+======================================================================================================
+...
+  | rex field=ccnumber mode=sed "s/(\d{4}-){3}/XXXX-XXXX-XXXX-/g"
+
+- Expand an event with more than one multivalue field into individual events for each field value:
+==================================================================================================
+source="mvexpandData.csv"
+  | rex field=_raw "a=(?<a>\d+)" max_match=5 
+  | rex field=_raw "b=(?<b>\d+)" max_match=5 
+  | eval fields = mvzip(a,b)  
+  | table _time fields
+  
+ - Match valid IPv4 addresses:
+ =============================
+ ...
+  | eval ipv4_valid = if(match(ipv4, "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"), "valid", "invalid")
