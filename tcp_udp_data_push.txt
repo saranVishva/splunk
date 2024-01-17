@@ -1,0 +1,5 @@
+setttings--> Datainput--> tcp/udp set port, name , index, 
+
+TCP --> cat auth.log | nc ip port
+UDP --> cat auth.log | nc ip -u port
+
