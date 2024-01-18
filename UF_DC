@@ -1,2 +1,8 @@
 ./splunk set deploy-poll ip:port
 
+deploymentclient.conf in UF
+
+[deployment-client]
+disabled = false
+clientName = your_unique_client_name
+targetUri = your_deployment_server_uri
