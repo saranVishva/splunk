@@ -1,0 +1,29 @@
+wget -O splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz "https://download.splunk.com/products/splunk/releases/9.1.2/linux/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz"
+
+wget -O splunkforwarder-9.1.2-b6b9c8185839-Linux-x86_64.tgz "https://download.splunk.com/products/universalforwarder/releases/9.1.2/linux/splunkforwarder-9.1.2-b6b9c8185839-Linux-x86_64.tgz"
+
+-------------------------------------
+./splunk init shcluster-config -auth admin:password -mgmt_uri https://15.206.79.178:8089 -replication_port 9000 -replication_factor 3 -conf_deploy_fetch_url https://52.66.67.239:8089 -secret password123 -shcluster_label SH1
+
+./splunk init shcluster-config -auth admin:password -mgmt_uri https://43.205.238.69:8089 -replication_port 9000 -replication_factor 3 -conf_deploy_fetch_url https://52.66.67.239:8089 -secret password123 -shcluster_label SH1
+
+./splunk init shcluster-config -auth admin:password -mgmt_uri https://13.232.77.201:8089 -replication_port 9000 -replication_factor 3 -conf_deploy_fetch_url https://52.66.67.239:8089 -secret password123 -shcluster_label SH1
+
+after running this command in all restrt all splunk instance before declaring captain
+-------------------------------------
+52.66.67.239   --  deployer
+
+/etc/system/local/server.conf
+
+[searchcluster]
+pass4SymmKey = password
+shcluster_label = SH1
+-------------------------------------
+./splunk bootstrap shcluster-captain -servers_list "https://15.206.79.178:8089,https://43.205.238.69:8089" -auth admin:password
+ 
+-------------------------------------
+15.206.79.178  --  SH1
+43.205.238.69  --  SH2
+13.232.77.201  --  SH3
+
+
