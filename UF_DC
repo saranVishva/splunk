@@ -6,3 +6,17 @@ deploymentclient.conf in UF
 disabled = false
 clientName = your_unique_client_name
 targetUri = your_deployment_server_uri
+
+-----------------------------------
+in the DS 
+inside Deployment-app / newappname/local/app.conf  --->/newappname create default  and inputs.conf 
+
+inputs.conf 
+  [monitor://var/log]
+  disabled=false
+  sourcetype=syslog
+
+-----------------------------------
+
+./splunk reload deploy-server
+
