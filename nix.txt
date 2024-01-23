@@ -1,0 +1,42 @@
+mynixos.com
+sudo nixos-rebuild switch
+------------------------------------------------
+channel-- default manage version of software
+          exact package version info stored outside config files
+
+
+------------------------------------------------
+flakes -- exact version of all package explicitly stated in config files 
+
+flake.log file contain all the version about pakage 
+------------------------------------------------
+configuration.nix 
+
+nix.settings.experimental-features = ["nix-command" "flakes"];
+
+create .dotfiles folder and copy the config.nix and hardware.nix
+create flakes.nix
+----------
+
+{
+ description= 'this is flakes';
+
+ inputs={
+       nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+       };
+
+ outputs={
+        nixosConfigurations={
+             nixos-tutorial=lib.nixosSystem{
+                system="x86_64-linux";
+                modules=[./configuration.nix];
+}
+}
+};
+
+}
+----------
+inputs --- may be point to github repo
+outputs--- path of the output to store the file from the github
+
+
