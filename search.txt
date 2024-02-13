@@ -1,0 +1,3 @@
+how search works
+
+dispatch directory contain ---- it stores the artifacts of search by creating a 

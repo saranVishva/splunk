@@ -1,1 +1,15 @@
 wget -O splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz "https://download.splunk.com/products/splunk/releases/9.1.2/linux/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz"
+
+lsblk 
+mkfs -t ext4 /dev/xvdf
+lsblk
+
+create volume in EBS 
+Attach volume in instance with ID
+
+format volume to ext4 
+mount the volume from /dev/xvdf to /mnt/mount_folder
+
+/opt/splunk/etc/apps/searches/indexes.conf  change the custom_index coldDB path to mounted path 
+
+wget -O splunkforwarder-9.2.0-1fff88043d5f-Linux-x86_64.tgz "https://download.splunk.com/products/universalforwarder/releases/9.2.0/linux/splunkforwarder-9.2.0-1fff88043d5f-Linux-x86_64.tgz"

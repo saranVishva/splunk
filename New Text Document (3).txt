@@ -1,0 +1,44 @@
+tranforms.conf
+
+[errorRouting]
+REGEX=ERROR
+DEST_KEY=_TCP_ROUTING
+FORMAT=errorGroup
+
+
+[successRouting]
+REGEX=success
+DEST_KEY=_TCP_ROUTING
+FORMAT=successGroup
+------------------------------
+props.conf 
+
+[test1]
+TRANSFORMS-routing=errorRouting,successRouting
+
+-----------------------------------------------------
+[apache_routing]
+TRANSFORMS-routing=successRoute,errorRoute
+
+
+
+-----------------------------------------------------------
+[monitor:///var/log/apache2/access.log]
+sourcetype = apache_access
+
+[apache_access]
+TRANSFORMS-routing = apache_success_index,apache_failure_index
+
+
+------------------------transforms.conf----------------------------------
+
+
+[apache_success_index]
+REGEX = 200
+DEST_KEY = _MetaData:Index
+FORMAT = success_apache_log
+
+[apache_failure_index]
+REGEX = ^((?!200)\d{3})$
+DEST_KEY = _MetaData:Index
+FORMAT = failure_apache_log

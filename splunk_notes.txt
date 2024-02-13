@@ -20,7 +20,7 @@ chmod
 
 ./splunk enable listen 9997             in splunk ENT
 ./splunk add forward-server ip:port     in UF  
-
+./splunk list inputstatus 		in UF
 ./splunk add monitor /var/log           in UF 
 ./splunk list forward-server            in UF
 

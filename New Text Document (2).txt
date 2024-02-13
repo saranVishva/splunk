@@ -7,3 +7,6 @@ $ -- ending of the line
 [A-Z] -- equal to word between upper case a-z , [A-Z]+ one or more word in upper case
 [0-9] -- any digit
 \w -- any letter or word, \w+ -- one or more word 
+
+
+
