@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo" ____  ____   _____        _______ ____"
+echo"/ ___||  _ \ / _ \ \      / / ____|  _ \"
+echo"\___ \| |_) | | | \ \ /\ / /|  _| | |_) |"
+echo" ___) |  __/| |_| |\ V  V / | |___|  _ <"
+echo"|____/|_|    \___/  \_/\_/  |_____|_| \_\"
+
 echo "SPLUNK INSTALLER   - BY SPOWER"
 
 # Function to check if user exists
