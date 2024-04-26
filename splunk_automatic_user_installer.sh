@@ -1,8 +1,5 @@
-#!/bin/bash
-echo "SPLUNK INSTALLER"
-
 # Username and password
-username="splunk"
+username="spower"
 password="password"
 
 # Create the user if it doesn't exist
@@ -22,6 +19,6 @@ sudo wget -O /tmp/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz "https://download.s
 cd /opt/
 sudo tar xvf /tmp/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz
 sudo chown -R "$username:$username" /opt/splunk
-/opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd "$password"
-
+command_to_execute="/opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd \"$password\""
+sudo -u "$username" bash -c "$command_to_execute"
 echo "Splunk installed under user $username."
