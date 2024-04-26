@@ -62,6 +62,7 @@ INSTANCE_IDS=$(aws ec2 run-instances \
     --count $COUNT \
     --block-device-mappings "[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"VolumeSize\":30}}]" \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Owner,Value='$OWNER_NAME'},{Key=Name,Value='$NAME'},{Key=Project,Value='$PROJECT_TAG'}]' \
+    --user-data file://splunk_installer.sh \
     --query 'Instances[].InstanceId' \
     --output text)
 
