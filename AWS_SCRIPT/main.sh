@@ -1,3 +1,4 @@
+#!/bin/bash
 # Default Key Name
 KEY_ID="Positka"
 
