@@ -1,40 +1,27 @@
 #!/bin/bash
-
-echo" ____  ____   _____        _______ ____"
-echo"/ ___||  _ \ / _ \ \      / / ____|  _ \"
-echo"\___ \| |_) | | | \ \ /\ / /|  _| | |_) |"
-echo" ___) |  __/| |_| |\ V  V / | |___|  _ <"
-echo"|____/|_|    \___/  \_/\_/  |_____|_| \_\"
-
-
-
 echo "SPLUNK INSTALLER"
 
-# Function to check if user exists
-user_exists() {
-    id "$1" &>/dev/null
-}
+# Username and password
+username="splunk"
+password="password"
 
-# Check if user 'splunker' exists, if not, create it
-if ! user_exists splunker; then
-    echo "User 'splunker' does not exist. Creating user..."
-    adduser splunker
-    passwd splunker
-    if [ $? -ne 0 ]; then
-        echo "Failed to create user 'splunker'. Exiting."
-        exit 1
-    fi
-    echo "User 'splunker' created successfully."
+# Create the user if it doesn't exist
+if ! id "$username" &>/dev/null; then
+    sudo useradd -m -s /bin/bash "$username"
+    echo "$username:$password" | sudo chpasswd
+    echo "User $username created with password: $password"
+else
+    echo "User $username already exists."
 fi
 
 # Install Splunk
 echo "Downloading Splunk installer..."
-wget -O splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz "https://download.splunk.com/products/splunk/releases/9.1.2/linux/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz"
-mv splunk-* /opt/
-cd /opt/
-tar xvf splunk-*
-chown -R splunker:splunker /opt/splunk
+sudo wget -O /tmp/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz "https://download.splunk.com/products/splunk/releases/9.1.2/linux/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz"
 
-# Start Splunk
-sudo  /opt/splunk/bin/splunk enable boot-start -user splunker -systemd-managed 1
-sudo -u splunker /opt/splunk/bin/splunk start
+# Switch to splunk user and install
+cd /opt/
+sudo tar xvf /tmp/splunk-9.1.2-b6b9c8185839-Linux-x86_64.tgz
+sudo chown -R "$username:$username" /opt/splunk
+/opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd "$password"
+
+echo "Splunk installed under user $username."
