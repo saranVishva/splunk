@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Username and password
 username="splunker"
 password="password"
